@@ -36,7 +36,7 @@ namespace Calculos
                     string[] resultado = multiplicar(int.Parse(strMultiplicando[j].ToString()), int.Parse(strMultiplicador[i].ToString()));
                     if (resultado == null)
                     {
-                        string s = string.Empty;
+                        //Actualizar aqui
                     }
                 }
             }
