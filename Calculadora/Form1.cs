@@ -25,27 +25,9 @@ namespace Calculadora
 
         private void btnMultiplicar_Click(object sender, EventArgs e)
         {
-            Multiplicacion m = new Multiplicacion();
+            Multiplicacion m = new Multiplicacion(Convert.ToInt32(this.txtMultiplicando.Text), Convert.ToInt32(this.txtMultiplicador.Text));
+            m.multiplicacion();
         }
 
-        private void lblMultiplicando_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblMultiplicador_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void multiplicador_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void multiplicando_TextChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
