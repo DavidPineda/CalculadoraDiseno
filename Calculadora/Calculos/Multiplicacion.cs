@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.ComponentModel;
 
 
@@ -31,12 +32,18 @@ namespace Calculos
             string strMultiplicador = Convert.ToString(Multiplicador);
             for (int i = strMultiplicador.Length - 1; i >= 0; i--)
             {
+                int incremento = 0;
                 for (int j = strMultiplicando.Length - 1; j >= 0; j--)
                 {
-                    string[] resultado = multiplicar(int.Parse(strMultiplicando[j].ToString()), int.Parse(strMultiplicador[i].ToString()));
-                    if (resultado == null)
+                    string[] resultado = multiplicar(int.Parse(strMultiplicando[j].ToString()), int.Parse(strMultiplicador[i].ToString()), incremento);
+                    if (resultado != null)
                     {
-                        //Actualizar aqui
+                        incremento = 0;
+                        int valMultiplicado = int.Parse(resultado[0].ToString());
+                        if (resultado.Length == 2)
+                        {
+                            incremento = int.Parse(resultado[1].ToString());
+                        }
                     }
                 }
             }
@@ -47,13 +54,14 @@ namespace Calculos
         /// </summary>
         /// <param name="multiplicando">Multiplicando de la operacion</param>
         /// <param name="multiplicador">Multiplicador de la operacion</param>
-        /// <returns>Retorna la cantidad de terminso que genero la division</returns>
-        private string[] multiplicar(int multiplicando, int multiplicador)
+        /// <param name="incremento">Lo que lleva la multiplicacion de mas</param>
+        /// <returns>Retorna la cantidad de terminos que genero la division</returns>
+        private string[] multiplicar(int multiplicando, int multiplicador, int incremento)
         {
             string res = string.Empty;
             try
             {
-                res = Convert.ToString(multiplicando * multiplicador);
+                res = Convert.ToString((multiplicando * multiplicador) + incremento);
             }
             catch (InvalidCastException ex)
             {
