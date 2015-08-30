@@ -1,4 +1,4 @@
-﻿namespace Calculadora
+﻿namespace Calculos
 {
     partial class frmMultiplicacion
     {
@@ -42,7 +42,6 @@
             this.txtMultiplicando.Name = "txtMultiplicando";
             this.txtMultiplicando.Size = new System.Drawing.Size(100, 20);
             this.txtMultiplicando.TabIndex = 0;
-            //this.txtMultiplicando.TextChanged += new System.EventHandler(this.txtMultiplicando_TextChanged);
             // 
             // txtMultiplicador
             // 
@@ -51,7 +50,6 @@
             this.txtMultiplicador.Name = "txtMultiplicador";
             this.txtMultiplicador.Size = new System.Drawing.Size(100, 20);
             this.txtMultiplicador.TabIndex = 1;
-            //this.txtMultiplicador.TextChanged += new System.EventHandler(this.txtMultiplicador_TextChanged);
             // 
             // btnMultiplicar
             // 
@@ -72,7 +70,6 @@
             this.lblMultiplicando.Size = new System.Drawing.Size(69, 13);
             this.lblMultiplicando.TabIndex = 3;
             this.lblMultiplicando.Text = "Multiplicando";
-            //this.lblMultiplicando.Click += new System.EventHandler(this.lblMultiplicando_Click);
             // 
             // lblMultiplicador
             // 
@@ -82,13 +79,12 @@
             this.lblMultiplicador.Size = new System.Drawing.Size(66, 13);
             this.lblMultiplicador.TabIndex = 4;
             this.lblMultiplicador.Text = "Multiplicador";
-            //this.lblMultiplicador.Click += new System.EventHandler(this.lblMultiplicador_Click);
             // 
             // frmMultiplicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(262, 97);
+            this.ClientSize = new System.Drawing.Size(259, 350);
             this.Controls.Add(this.lblMultiplicador);
             this.Controls.Add(this.lblMultiplicando);
             this.Controls.Add(this.btnMultiplicar);

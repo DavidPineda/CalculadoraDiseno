@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Calculos;
 
-namespace Calculadora
+namespace Calculos
 {
     public partial class frmMultiplicacion : Form
     {
@@ -25,7 +25,7 @@ namespace Calculadora
 
         private void btnMultiplicar_Click(object sender, EventArgs e)
         {
-            Multiplicacion m = new Multiplicacion(Convert.ToInt32(this.txtMultiplicando.Text), Convert.ToInt32(this.txtMultiplicador.Text));
+            Multiplicacion m = new Multiplicacion(Convert.ToInt32(this.txtMultiplicando.Text), Convert.ToInt32(this.txtMultiplicador.Text),this);
             m.multiplicacion();
         }
 
