@@ -321,7 +321,7 @@ namespace Calculos
                         {
                             sumaTotalc += int.Parse(matriz[f,c].ToString());
                         }     
-                    }
+                    } 
                     faux += 1;
                     if(suma > 0 ){
                          sumaTotalc += suma;
