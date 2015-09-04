@@ -15,6 +15,9 @@ namespace Calculos
         public Form Formulario { get; set; }
         public int _yDrawline;
 
+        public int [,] matriz;
+
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -31,8 +34,11 @@ namespace Calculos
             this._yDrawline = 140;
             drawMultiplicando();
             drawMultiplicador();
+            crearMatrizSuma(Convert.ToString(multiplicando).ToString(), Convert.ToString(multiplicador).ToString());
+            //llenarMatrizCeros(matriz);
             initDrawLine();
         }
+
 
         /// <summary>
         /// Constructor
@@ -50,42 +56,110 @@ namespace Calculos
         {
             string strMultiplicando = Convert.ToString(Multiplicando);
             string strMultiplicador = Convert.ToString(Multiplicador);
+            //variables para pintado dinamico
             Y += 33;
             int x = X;
             int xdescuento = 10;
             int ydescuento = 0;
             int xretornoCarro = xdescuento;
+            //variables para pintado dinamico
+
+            //variables para llenado matriz
+            int fmatriz = 0;
+            int cmatriz = 0;
+            int xmatrizdescuentoPos = 0;
+            //varialbles para llenado matriz
             int suma = 0;
             for (int i = strMultiplicador.Length - 1; i >= 0; i--)
             {
-                for (int j = strMultiplicando.Length - 1; j >= 0; j--)
-                {
-                    string[] resultado = multiplicar(int.Parse(strMultiplicando[j].ToString()), int.Parse(strMultiplicador[i].ToString()));
-                    if (resultado != null)
+                cmatriz = ((matriz.GetLength(1)-1) - xmatrizdescuentoPos);
+                    for (int j = strMultiplicando.Length - 1; j >= 0; j--)
                     {
-                        if (resultado.Length > 1)
+                        string[] resultado = multiplicar(int.Parse(strMultiplicando[j].ToString()), int.Parse(strMultiplicador[i].ToString()));
+                        if (resultado != null)
                         {
-                            //revisar porque solo pinta la segunda linea
-                            // unir las dos posiciones del array y luego sumarlo lo que lleva , y leugo separar la cadena
-                            //suma += int.Parse(resultado[0].ToString());
-                            addControlsForm(addPointControl(construirLabel(resultado[0].ToString(), Color.Black), x - xdescuento, Y + ydescuento));
-                            //addControlsForm(addPointControl(construirLabel(resultado[1].ToString(), Color.Black), x - xdescuento, (Y -12)));
-                            //suma = int.Parse(resultado[1].ToString());
+                            if (resultado.Length > 1)
+                            {
+                                if (suma == 0)
+                                {
+                                    addControlsForm(addPointControl(construirLabel(resultado[0].ToString(), Color.Black), x - xdescuento, Y + ydescuento));
+                                    //addControlsForm(addPointControl(construirLabel(resultado[1].ToString(), Color.Black), x - xdescuento, (Y -12)));
+                                    suma = int.Parse(resultado[1].ToString());
+                                    matriz[fmatriz,cmatriz] = int.Parse(resultado[0].ToString());
+                                }
+                                else
+                                {
+                                    resultado = multiplicar(int.Parse(resultado[1].ToString() + resultado[0].ToString()) + suma, 1);
+                                    addControlsForm(addPointControl(construirLabel(resultado[0].ToString(), Color.Black), x - xdescuento, Y + ydescuento));
+                                    matriz[fmatriz,cmatriz] = int.Parse(resultado[0].ToString());
+                                    if (resultado.Length > 1) suma = int.Parse(resultado[1].ToString());
+                                    if (j == 0)
+                                    {
+                                        addControlsForm(addPointControl(construirLabel(Convert.ToString(suma).ToString(), Color.Black), x - (xdescuento + 10), Y + ydescuento));
+                                        matriz[fmatriz, cmatriz] = int.Parse(Convert.ToString(suma).ToString());
+                                        suma = 0;
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (j == 0)
+                                {
+                                        if (suma == 0){
+                                            matriz[fmatriz,cmatriz] = int.Parse(resultado[0].ToString());
+                                            addControlsForm(addPointControl(construirLabel(Convert.ToString(int.Parse(resultado[0].ToString())).ToString(), Color.Black), x - (xdescuento ), Y + ydescuento)); 
+                                        }else{
+                                            if (resultado[0].ToString().Length == 1){
+                                                matriz[fmatriz, cmatriz] = int.Parse(Convert.ToString(suma + int.Parse(resultado[0].ToString())).ToString());
+                                                addControlsForm(addPointControl(construirLabel(Convert.ToString(suma + int.Parse(resultado[0].ToString())).ToString(), Color.Black), x - (xdescuento), Y + ydescuento));        
+                                            }
+                                            else{
+                                                matriz[fmatriz, cmatriz] = int.Parse(Convert.ToString(suma + int.Parse(resultado[0].ToString())).ToString());
+                                                addControlsForm(addPointControl(construirLabel(Convert.ToString(suma + int.Parse(resultado[0].ToString())).ToString(), Color.Black), x - (xdescuento + 10), Y + ydescuento)); 
+                                            }
+                                         }
+                                    suma = 0;
+                                    break;
+                                }
+                                else
+                                {
+                                    if (suma == 0)
+                                    {
+                                        addControlsForm(addPointControl(construirLabel(resultado[0].ToString(), Color.Black), x - xdescuento, Y + ydescuento));
+                                        matriz[fmatriz,cmatriz] = int.Parse(resultado[0].ToString());
+                                    }
+                                    else
+                                    {
+                                        resultado = multiplicar(int.Parse(resultado[0].ToString()) + suma, 1);
+                                        addControlsForm(addPointControl(construirLabel(resultado[0].ToString(), Color.Black), x - xdescuento, Y + ydescuento));
+                                        //addControlsForm(addPointControl(construirLabel(resultado[1].ToString(), Color.Black), x - xdescuento, (Y -12)));
+                                        matriz[fmatriz,cmatriz] = int.Parse(resultado[0].ToString());
+                                        if (resultado.Length > 1) 
+                                            suma = int.Parse(resultado[1].ToString());
+                                        else
+                                            suma = 0;
+                                    }               
+                                }
+                            }
+                            xdescuento += 10; 
+                            cmatriz -=1;
                         }
-                        else
-                        {
-                            addControlsForm(addPointControl(construirLabel(resultado[0].ToString(), Color.Black), x - xdescuento, Y + ydescuento));
-                        }
-                        xdescuento += 10;
                     }
-                }
                 ydescuento += 12;
                 x = X - xretornoCarro;
                 xdescuento = 10;
                 xretornoCarro += 10;
+                //
+                xmatrizdescuentoPos += 1;
+                fmatriz += 1;
             }
             _yDrawline +=(ydescuento +12);
             initDrawLine();
+            pintarMatriz();
+            //actualizar Y con el ultimo valor para determinar donde pintar la suma
+            Y = Y + ydescuento;
+            sumarMatriz();
         }
 
         /// <summary>
@@ -169,7 +243,7 @@ namespace Calculos
         /// <param name="e"></param>
         private void drawline(object sender, System.Windows.Forms.PaintEventArgs e)
         {
-           Graphics g = Formulario.CreateGraphics();
+           Graphics g =  Formulario.CreateGraphics();
             Pen p = new Pen(Color.Blue, 2);
             g.DrawLine(p, new Point(10, _yDrawline), new Point((Formulario.Width - 20), _yDrawline));
         }
@@ -202,6 +276,69 @@ namespace Calculos
             }
             addControlsForm(addPointControl(construirLabel("x", Color.DarkBlue), (X - (xdescuento + 10)), Y + 12));
         }
-        
+
+        /// <summary>
+        /// Crea una matriz basado el numero con mayor numero de caracateres
+        /// </summary>
+        /// <param name="multiplicando">Numero a multiplicar</param>
+        /// <param name="multiplicador">Numero multiplicador</param>
+        private void crearMatrizSuma(string multiplicando, string multiplicador)
+        {
+            if (multiplicando.Length >= multiplicador.Length)
+                matriz = new int[multiplicador.Length , ((multiplicando.Length - 1) * 2) + 2];
+            else
+                matriz = new int[multiplicador.Length , ((multiplicador.Length - 1) * 2) + 2];
+        }
+
+        private void pintarMatriz()
+        {
+            for (int i = 0; i < matriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < matriz.GetLength(1); j++)
+                {
+                    Console.Write(matriz[i, j] + " "); //Escribe en una sola linea
+                }
+                Console.WriteLine(); //Genera el salto de linea
+            } 
+        }
+
+        private void sumarMatriz()
+        {
+            //variables para pintar dinamicamente en el form
+            int xdescuento = 10;
+            Y += 12; 
+            //variables para recorrer la matriz y hacer la sumatorias
+            int faux = 0;
+            int sumaTotalc = 0;
+            int suma = 0;
+            if (matriz != null)
+            {
+                for (int c = matriz.GetLength(1) -1; c > 0; c--)
+                {
+                    for (int f = 0; f <= faux; f++)
+                    {
+                        if (f < matriz.GetLength(0) )
+                        {
+                            sumaTotalc += int.Parse(matriz[f,c].ToString());
+                        }     
+                    }
+                    faux += 1;
+                    if(suma > 0 ){
+                         sumaTotalc += suma;
+                         suma = 0;
+                    }
+
+                    if (Convert.ToString(sumaTotalc).ToString().Length > 1 ){
+                        suma = int.Parse(Convert.ToString(sumaTotalc).Substring(0,1));
+                        addControlsForm(addPointControl(construirLabel(Convert.ToString(sumaTotalc).Substring(1,1), Color.Black), X - xdescuento, Y));
+                    }else{
+                        addControlsForm(addPointControl(construirLabel(Convert.ToString(sumaTotalc).Substring(0, 1), Color.Black), X - xdescuento, Y));
+                    }
+                    sumaTotalc = 0;
+                    xdescuento += 10;
+                }
+            }
+        }
+
     }
 }
